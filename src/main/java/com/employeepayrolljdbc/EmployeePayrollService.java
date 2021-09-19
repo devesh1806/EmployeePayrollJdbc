@@ -1,5 +1,6 @@
 package com.employeepayrolljdbc;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -51,5 +52,13 @@ public class EmployeePayrollService {
 			System.out.println(emp_id+" "+name+" "+phone_number+" "+date+" "+gender+" ");
 		}
 		return i;
+	}
+	
+	public int retrieveDate() throws SQLException {
+		Date dateStart = Date.valueOf("2018-01-01");
+		Date dateEnd = Date.valueOf("2021-12-30");
+		String query = String.format("Select * from employee where start between '%tF' and '%tF';",dateStart,dateEnd);
+		ResultSet queries = getQuerries(query);
+		return printSet(queries);
 	}
 }
