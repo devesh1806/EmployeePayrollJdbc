@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.time.LocalDate;
 
 public class EmployeePayrollService {
@@ -15,15 +16,23 @@ public class EmployeePayrollService {
 	}
 	
 	public int updateData(String name,double value) throws SQLException {
-		employeePayrollJdbc = new EmployeePayrollJdbc();
+		employeePayrollJdbc = EmployeePayrollJdbc.getInstance();
 		Connection connection = employeePayrollJdbc.dbConnect();
 		Statement statement = connection.createStatement();
 		String query = String.format("update payroll set basic_pay = '%.2f' where emp_id IN (select emp_id from employee where name = '%s');",value,name);
 		return statement.executeUpdate(query);
 	}
 	
+	public int updatePreparedData(String name,double value) throws SQLException {
+		employeePayrollJdbc = EmployeePayrollJdbc.getInstance();
+		Connection connection = employeePayrollJdbc.dbConnect();
+		String query = String.format("update payroll set basic_pay = '%.2f' where emp_id IN (select emp_id from employee where name = '%s');",value,name);
+		PreparedStatement statement =  connection.prepareStatement(query);
+		return statement.executeUpdate();
+	}
+	
 	public ResultSet getQuerries(String query) throws SQLException {
-		employeePayrollJdbc = new EmployeePayrollJdbc();
+		employeePayrollJdbc = EmployeePayrollJdbc.getInstance();
 		Connection connection = employeePayrollJdbc.dbConnect();
 		Statement statement = connection.createStatement();
 		
