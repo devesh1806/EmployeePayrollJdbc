@@ -61,4 +61,53 @@ public class EmployeePayrollService {
 		ResultSet queries = getQuerries(query);
 		return printSet(queries);
 	}
+
+	public Integer sumData() throws SQLException {
+		String query = "select e.gender,sum(p.basic_pay) from employee e,payroll p where e.emp_id = p.emp_id group by gender;";
+		ResultSet queries = getQuerries(query);
+		int i=0;
+		while(queries.next()) {
+			i++;
+			char gender = queries.getString("gender").charAt(0);
+			double basic_pay = queries.getDouble("sum(p.basic_pay)");
+			System.out.println(gender+" "+basic_pay);
+		}
+		return i;
+	}
+	public Integer minData() throws SQLException {
+		String query = "select e.gender,min(p.basic_pay) from employee e,payroll p where e.emp_id = p.emp_id group by gender;";
+		ResultSet queries = getQuerries(query);
+		int i=0;
+		while(queries.next()) {
+			i++;
+			char gender = queries.getString("gender").charAt(0);
+			double basic_pay = queries.getDouble("min(p.basic_pay)");
+			System.out.println(gender+" "+basic_pay);
+		}
+		return i;
+	}
+	public Integer maxData() throws SQLException {
+		String query = "select e.gender,max(p.basic_pay) from employee e,payroll p where e.emp_id = p.emp_id group by gender;";
+		ResultSet queries = getQuerries(query);
+		int i=0;
+		while(queries.next()) {
+			i++;
+			char gender = queries.getString("gender").charAt(0);
+			double basic_pay = queries.getDouble("max(p.basic_pay)");
+			System.out.println(gender+" "+basic_pay);
+		}
+		return i;
+	}
+	public Integer countData() throws SQLException {
+		String query = "select e.gender,count(p.basic_pay) from employee e,payroll p where e.emp_id = p.emp_id group by gender;";
+		ResultSet queries = getQuerries(query);
+		int i=0;
+		while(queries.next()) {
+			i++;
+			char gender = queries.getString("gender").charAt(0);
+			int basic_pay = queries.getInt("count(p.basic_pay)");
+			System.out.println(gender+" "+basic_pay);
+		}
+		return i;
+	}
 }
