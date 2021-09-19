@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.time.LocalDate;
+import java.util.Date;
 
 public class EmployeePayrollService {
 	
@@ -51,5 +52,11 @@ public class EmployeePayrollService {
 			System.out.println(emp_id+" "+name+" "+phone_number+" "+date+" "+gender+" ");
 		}
 		return i;
+	}
+	
+	public int retrieveDate() throws SQLException {
+		String query = String.format("Select * from employee where start between '%s' and '%s');", Date.parse("2018-01-01"),Date.parse("2021-12-30"));
+		ResultSet queries = getQuerries(query);
+		return printSet(queries);
 	}
 }
